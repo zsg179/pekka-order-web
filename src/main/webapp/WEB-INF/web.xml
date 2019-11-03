@@ -35,6 +35,9 @@
 		<servlet-name>pekka-order-web</servlet-name>
 		<!-- 伪静态化：SEO  搜索引擎优化-->
 		<url-pattern>*.html</url-pattern>
-	<!-- 	<url-pattern>/</url-pattern> -->
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>pekka-order-web</servlet-name>
+		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pekka.common.pojo.PekkaResult;
 import com.pekka.common.util.CookieUtils;
@@ -49,8 +50,9 @@ public class OrderCartController {
 		// 用户必须是登陆状态
 		// 取用户id
 		TbUser user = (TbUser) request.getAttribute("user");
-		// 根据用户信息取收获地址列表，使用静态数据
+		// 根据用户信息取收获地址列表
 		TbReceivingAddress receiver = orderService.getReceiverByUserName(user.getUsername());
+		receiver.setUsername(user.getUsername());// 防止是第一次请求，receiver内的值全空的情况
 		// 把收获地址列表取出传递给页面
 		request.setAttribute("receiver", receiver);
 		// 从cookie中取购物车商品列表展示到页面
@@ -84,11 +86,10 @@ public class OrderCartController {
 		return "success";
 	}
 
-	/*
-	 * @RequestMapping(value = "/receiver/{token}", method = RequestMethod.GET)
-	 * public String getReceiverBytoken(@PathVariable String token,
-	 * HttpServletRequest request) { TbReceivingAddress receiver =
-	 * orderService.getReceiverByToken(token); request.setAttribute("receiver",
-	 * receiver); return "order-cart"; }
-	 */
+	@RequestMapping(value = "/order/saveReceiver", method = RequestMethod.POST)
+	@ResponseBody
+	public PekkaResult saveReceiver(TbReceivingAddress receiver) {
+		PekkaResult result = orderService.saveReceiver(receiver);
+		return result;
+	}
 }

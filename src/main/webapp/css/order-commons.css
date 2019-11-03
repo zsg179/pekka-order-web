@@ -3278,7 +3278,7 @@ div.ui-dialog-content {
 	text-align: right;
 	position: absolute;
 	width: 690px;
-	height: 509px;
+	height: 450px;
 	top: 93.5px;
 	left: 410.5px;
 	border-radius: 5px;
@@ -3305,6 +3305,11 @@ div.ui-dialog-content {
 	font-size: 14px;
 	color: #666;
 	font-family: "Microsoft YaHei";
+	width: 670px;
+	margin-top: -10px;
+	padding-right: 30px;
+	padding-left: 10px;
+	margin-left: -10px;
 }
 
 .dialog-start {
@@ -3334,6 +3339,52 @@ div.ui-dialog-content {
 	margin-bottom: 10px;
 	line-height: 25px;
 }
-.dialog-content{
+
+.dialog-content {
 	margin-top: 20px;
+	font: 12px/150% tahoma, arial, Microsoft YaHei, Hiragino Sans GB,
+		"\u5b8b\u4f53", sans-serif;
+}
+
+.savaReceiverInfo-f {
+	float: left;
+}
+
+.savaReceiverInfo-a {
+	font-family: arial, "Microsoft YaHei";
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	background-color: #e74649;
+	background-image: linear-gradient(to top, #e74649 0, #df3134 100%);
+	border-radius: 3px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 400;
+	padding: 0 15px;
+	cursor: pointer;
+	border: 0;
+	float: none;
+	text-decoration: none;
+}
+
+.savaReceiverInfo-a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.tips {
+	display: inline-block;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 10px 0 30px;
+	vertical-align: middle;
+	color: #e4393c;
+	background: url(../images/error-ico.png) 8px 4px no-repeat #fff;
+	margin-top: -65px;
+	padding-right: 225px;
+
+}
+.area-div{
+	height: 35px;
 }

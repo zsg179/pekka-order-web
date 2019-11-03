@@ -3,7 +3,8 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="pragma" content="no-cache" />
@@ -69,7 +70,7 @@
 		</c:forEach>
 		<input type="hidden" name="payment"
 			value="<fmt:formatNumber groupingUsed="false" maxFractionDigits="2" minFractionDigits="2" value="${totalPrice/100 }"/>" />
-		<input type="hidden" name="orderShipping.receiverName"
+		<input type="hidden" name="orderShipping.receiverName" id="receiverName"
 			value="${receiver.receiverName }" /> <input type="hidden"
 			name="orderShipping.receiverMobile"
 			value="${receiver.receiverMobile }" /> <input type="hidden"
@@ -138,40 +139,123 @@
 
 						<div id="address-mask"></div>
 						<div id="address-dialog">
-							<div class="dialog-title" style="width: 670px">
+							<div class="dialog-title">
 								<span style="float: left;">编辑收货人信息</span>
-								<div class="close">
+								<div class="close" style="width: 690px">
 									<a href="javascript:void(0)" onclick="closeDialog()">关闭</a>
 								</div>
-								<div class="dialog-content">
-									<form action="">
-										<div class="area-div">
-											<span class="dialog-label"><em class="dialog-start">*</em>详细地址</span><input
-												class = "dialog-input" type="text" maxlength="50"/>
-										</div>
-										<div class="area-div">
-											<span class="dialog-label"><em class="dialog-start">*</em>收货人</span><input
-												class = "dialog-input" type="text" maxlength="20"/>
-										</div>
-										<div class="area-div">
-											<span class="dialog-label"><em class="dialog-start">*</em>手机号码</span><input
-												class = "dialog-input" type="text" maxlength="11"/>
-										</div>
-										<div class="area-div">
-											<span class="dialog-label"><em class="dialog-start">&nbsp;&nbsp;</em>固定电话</span><input
-												class = "dialog-input" type="text" maxlength="20"/>
-										</div>
-										<div class="area-div">
-											<span class="dialog-label"><em class="dialog-start">&nbsp;&nbsp;</em>邮箱地址</span><input
-												class = "dialog-input" type="text" maxlength="50"/>
-										</div>
-									</form>
-								</div>
 							</div>
-
-
+							<div class="dialog-content">
+								<form id="receiverForm">
+								<input type="hidden" name = "username" id="username" value="${receiver.username }"/> 
+									<div class="area-div" >
+										<span class="dialog-label"><em class="dialog-start">*</em>省份</span><input
+											class="dialog-input" type="text" maxlength="10"
+											name="receiverState" id="receiverState" value="${receiver.receiverState }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">*</em>城市</span>
+										<input 
+										class="dialog-input" type="text" maxlength="10" 
+										name="receiverCity" id="receiverCity" value="${receiver.receiverCity }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">*</em>区/县</span><input
+											class="dialog-input" type="text" maxlength="10"
+											name="receiverDistrict" id="receiverDistrict" value="${receiver.receiverDistrict }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">*</em>详细地址</span><input
+											class="dialog-input" type="text" maxlength="50"
+											name="receiverAddress" id="receiverAddress" value="${receiver.receiverAddress }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">*</em>收货人</span><input
+											class="dialog-input" type="text" maxlength="20"
+											name="receiverName" id="receiverName" value="${receiver.receiverName }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">*</em>手机号码</span><input
+											class="dialog-input" type="text" maxlength="11"
+											name="receiverMobile" id="receiverMobile" value="${receiver.receiverMobile }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">&nbsp;&nbsp;</em>固定电话</span><input
+											class="dialog-input" type="text" maxlength="20"
+											name="receiverPhone" id="receiverPhone" value="${receiver.receiverPhone }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">&nbsp;&nbsp;</em>邮箱地址</span><input
+											class="dialog-input" type="text" maxlength="20"
+											name="receiverZip" id="receiverZip" value="${receiver.receiverZip }"/>
+									</div>
+									<div class="area-div">
+										<span class="dialog-label"><em class="dialog-start">&nbsp;&nbsp;</em>&nbsp;&nbsp;</span>
+										<div class="savaReceiverInfo-f">
+											<a class="savaReceiverInfo-a" href="#none"
+												onclick="saveReceiver()"><span class="savaReceiverInfo">保存收货人信息</span></a>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- dialog-content end -->
 						</div>
-						<script>
+						<!-- address-dialog end -->
+						<script type="text/javascript">
+						$(function() {
+							
+							$(".dialog-input").blur(function() {
+								var value = $(this).val();
+								$(this).parent().find(".tips").remove();
+								if($(this).is("#receiverState")){
+									if(value.length==0){
+										$(this).parent().append("<span class='tips'>请您填写收货省份</span>");
+									}
+								}
+								if($(this).is("#receiverCity")){
+									if(value.length==0){
+										$(this).parent().append("<span class='tips'>请您填写收货城市</span>");
+									}
+								}
+								if($(this).is("#receiverDistrict")){
+									if(value.length==0){
+										$(this).parent().append("<span class='tips' style='padding-right: 220.5px;'>请您填写收货区/县</span>");
+									}
+								}
+								if($(this).is("#receiverAddress")){
+									if(value.length==0){
+										$(this).parent().append("<span class='tips' style='padding-right: 190px;'>请您填写收货人详细地址</span>");
+									}
+								}
+								if($(this).is("#receiverName")){
+									if(value.length==0){
+										$(this).parent().append("<span class='tips' style='padding-right: 214px;'>请您填写收货人姓名</span>");
+									}
+								}
+								if($(this).is("#receiverMobile")){
+									if(value.length==0){
+										$(this).parent().append("<span class='tips' style='padding-right: 190px;'>请您填写收货人手机号码</span>");
+									}else{
+										if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(value))){ 
+											$(this).parent().append("<span class='tips' style='padding-right: 214px;'>手机号码格式不正确</span>"); 
+									    } 
+									}
+								}
+								if($(this).is("#receiverZip")){
+									if(value.length!=0){
+										if(!(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value))){
+											$(this).parent().append("<span class='tips' style='padding-right: 238px;'>邮箱格式不正确</span>");
+										}
+									}
+									
+								}
+							})
+
+						});
+							
+						
+						</script>
+						<script type="text/javascript">
 							/*点击弹出按钮*/
 							function popDialog() {
 								var addressDialog = document
@@ -188,7 +272,6 @@
 								addressDialog.style.display = "block";
 								addressMask.style.display = "block";
 							};
-
 							/*点击关闭按钮*/
 							function closeDialog() {
 								var addressDialog = document
@@ -197,6 +280,21 @@
 										.getElementById("address-mask");
 								addressDialog.style.display = "none";
 								addressMask.style.display = "none";
+							};
+							/* 提交表单 */
+							function saveReceiver() {
+								//触发所有必填项的校验
+								$(".dialog-input").trigger("blur");
+								if($(".tips").length>0){
+					                return false;
+					            }
+								$.post("/order/saveReceiver.action",$("#receiverForm").serialize(),
+										function(data) {
+											if (data.status == 200) {
+												closeDialog();
+												window.location.reload();
+											}
+										})
 							}
 						</script>
 
@@ -252,21 +350,13 @@
 						<!--  span class="qmark-icon qmark-tip" data-tips="在线支付，支持绝大多数银行借记卡及部分银行信用卡 <a href='http://help.jd.com/help/question-68.html' target='_blank' class='ftx-05'>查看银行及限额</a>"></span -->
 						<!-- span class="qmark-icon qmark-tip" data-tips="通过快钱平台收款  汇款后1-3个工作日到账 <a target='_blank' href='http://help.jd.com/help/question-69.html'>查看帮助</a>"></span -->
 					</div>
-				</li>  --%> <!--div id="shipment"></div-->
-												<script>
-													$('.online-payment')
-															.hover(
-																	function() {
-																		$(this)
-																				.addClass(
-																						'payment-item-hover');
-																	},
-																	function() {
-																		$(this)
-																				.removeClass(
-																						'payment-item-hover');
-																	});
-												</script>
+				</li>  --%> <!--div id="shipment"></div--> <script>
+					$('.online-payment').hover(function() {
+						$(this).addClass('payment-item-hover');
+					}, function() {
+						$(this).removeClass('payment-item-hover');
+					});
+				</script>
 											</ul>
 										</div>
 									</div>
@@ -396,7 +486,7 @@
 							<div class="sticky-wrap">
 								<div class="inner">
 									<button type="submit" class="checkout-submit btn-1"
-										id="order-submit" onclick="$('#orderForm').submit()">
+										id="order-submit" onclick="check()">
 										提交订单</button>
 									<span class="total">应付总额：<strong id="payPriceId">￥<fmt:formatNumber
 												value="${totalPrice / 100}" maxFractionDigits="2"
@@ -421,6 +511,18 @@
 
 	</div>
 	</div>
+	<script type="text/javascript">
+		function check(){
+			if($("#receiverName").val()==""){
+				alert("收货人信息不正确！");
+			}else{
+				success();
+			}
+		}
+		function success(){
+			$('#orderForm').submit();
+		}
+	</script>
 
 	<!-- /main -->
 	<jsp:include page="commons/footer.jsp" />
