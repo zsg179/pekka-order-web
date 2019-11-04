@@ -50,7 +50,7 @@
 		id="userService" />
 	<dubbo:reference
 		interface="com.pekka.order.service.OrderService"
-		id="orderService" />
+		id="orderService" timeout="1500000"/>
 
 
 </beans>

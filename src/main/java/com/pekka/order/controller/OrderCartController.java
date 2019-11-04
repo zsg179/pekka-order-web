@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +21,7 @@ import com.pekka.common.util.JsonUtils;
 import com.pekka.order.pojo.OrderInfo;
 import com.pekka.order.service.OrderService;
 import com.pekka.pojo.TbItem;
+import com.pekka.pojo.TbOrderItem;
 import com.pekka.pojo.TbReceivingAddress;
 import com.pekka.pojo.TbUser;
 
@@ -35,6 +36,8 @@ public class OrderCartController {
 
 	@Value("${CART_KEY}")
 	private String CART_KEY;
+	@Value("${CART_EXPIER}")
+	private Integer CART_EXPIER;
 
 	@Autowired
 	private OrderService orderService;
@@ -72,18 +75,48 @@ public class OrderCartController {
 		return list;
 	}
 
+	public void removeCartItem(OrderInfo orderInfo, HttpServletRequest request, HttpServletResponse response) {
+		List<TbOrderItem> list = orderInfo.getOrderItems();
+		// 获取购物车中的商品
+		List<TbItem> itemList = getCartItemList(request);
+		for (TbOrderItem tbOrderItem : list) {
+			// 已购买商品的id
+			String itemId = tbOrderItem.getItemId();
+			Long LongItemId = Long.parseLong(itemId);
+			for (TbItem tbItem : itemList) {
+				if (LongItemId.equals((tbItem.getId()))) {
+					itemList.remove(tbItem);
+					break;
+				}
+			}
+		}
+		// 重新设置cookie
+		CookieUtils.setCookie(request, response, CART_KEY, JsonUtils.objectToJson(itemList), CART_EXPIER, true);
+
+	}
+
 	@RequestMapping(value = "/order/create", method = RequestMethod.POST)
-	public String createOrder(OrderInfo orderInfo, Model model) {
+	@ResponseBody
+	public PekkaResult createOrder(OrderInfo orderInfo, HttpServletRequest request, HttpServletResponse response) {
 		// 生成订单
 		PekkaResult result = orderService.createOrder(orderInfo);
-		// 返回逻辑视图
-		model.addAttribute("orderId", result.getData().toString());
-		model.addAttribute("payment", orderInfo.getPayment());
+		if (result.getStatus() == 500) {
+			return result;
+		}
+		orderInfo = (OrderInfo) result.getData();
+		// 移除购物车中以购买的商品
+		removeCartItem(orderInfo, request, response);
+		// 存入session
+		request.getSession().setAttribute("orderId", orderInfo.getOrderId());
+		request.getSession().setAttribute("payment", orderInfo.getPayment());
+		// model.addAttribute("orderId", result.getData().toString());
+		// model.addAttribute("payment", orderInfo.getPayment());
 		// 预计送达时间，三天后送达
 		DateTime dateTime = new DateTime();
 		dateTime = dateTime.plusDays(3);
-		model.addAttribute("date", dateTime.toString("yyyy-MM-dd"));
-		return "success";
+		request.getSession().setAttribute("date", dateTime.toString("yyyy-MM-dd"));
+		// model.addAttribute("date", dateTime.toString("yyyy-MM-dd"));
+		return result;
 	}
 
 	@RequestMapping(value = "/order/saveReceiver", method = RequestMethod.POST)
@@ -91,5 +124,10 @@ public class OrderCartController {
 	public PekkaResult saveReceiver(TbReceivingAddress receiver) {
 		PekkaResult result = orderService.saveReceiver(receiver);
 		return result;
+	}
+
+	@RequestMapping("/order/success")
+	public String toSuccess() {
+		return "success";
 	}
 }

@@ -33,7 +33,7 @@
 
 	<div class="w w1 header clearfix">
 		<div id="logo">
-			<a href="/"><img clstag="clickcart|keycount|xincart|logo"
+			<a href="http://localhost:8082"><img clstag="clickcart|keycount|xincart|logo"
 				src="/images/pekka-logo.jpg" width="150" height="62" alt="皮卡"
 				title="返回皮卡商城首页" alt="返回皮卡商城首页"></a>
 		</div>
@@ -49,8 +49,7 @@
 		</div>
 	</div>
 
-	<form id="orderForm" class="hide" action="/order/create.html"
-		method="post">
+	<form id="orderForm" class="hide">
 		<input type="hidden" name="paymentType" value="1" />
 		<c:forEach items="${cartList }" var="cart" varStatus="status">
 			<c:set var="totalPrice"
@@ -314,8 +313,8 @@
 												<input type="hidden" id="instalmentPlan" value="false">
 													<li style="cursor: pointer;" onclick="save_Pay(1);">
 														<div class="payment-item item-selected online-payment "
-															for="pay-method-1" payname="货到付款" payid="1">
-															<b></b> 货到付款<span class="qmark-icon qmark-tip"
+															for="pay-method-1" payname="在线支付" payid="1">
+															<b></b> 在线支付<span class="qmark-icon qmark-tip"
 																data-tips="送货上门后再收款，支持现金、POS机刷卡、支票支付 <a href='http://help.jd.com/help/distribution-768-2-2813-2863-0-1410707152669.html' target='_blank' class='ftx-05'>查看服务及配送范围</a>"></span>
 															<!--  span class="qmark-icon qmark-tip" data-tips="在线支付，支持绝大多数银行借记卡及部分银行信用卡 <a href='http://help.jd.com/help/question-68.html' target='_blank' class='ftx-05'>查看银行及限额</a>"></span -->
 															<!-- span class="qmark-icon qmark-tip" data-tips="送货上门后再收款，支持现金、POS机刷卡、支票支付 <a target='_blank' href='http://psfw.jd.com/help/distribution-768.html-2-2825-2893-0-1427094595258.html'>查看服务及配送范围</a>"></span -->
@@ -495,7 +494,7 @@
 									<div class="checkout-submit-tip" id="changeAreaAndPrice"
 										style="display: none;">由于价格可能发生变化，请核对后再提交订单</div>
 									<div style="display: none" id="factoryShipCodShowDivBottom"
-										class="dispatching">部分商品货到付款方式：先由皮卡配送“提货单”并收款，然后厂商发货。</div>
+										class="dispatching">部分商品在线支付方式：先由皮卡配送“提货单”并收款，然后厂商发货。</div>
 								</div>
 								<span id="submit_message" style="display: none"
 									class="submit-error"></span>
@@ -520,7 +519,13 @@
 			}
 		}
 		function success(){
-			$('#orderForm').submit();
+			$.post("/order/create.action",$("#orderForm").serialize(),function(data){
+				if(data.status==200){
+					location.href = "http://localhost:8091/order/success.html";
+				}else{
+					alert(data.msg);
+				}
+			})
 		}
 	</script>
 
