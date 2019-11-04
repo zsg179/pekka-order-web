@@ -44,13 +44,13 @@
 	<dubbo:application name="pekka-order-web" />
 	<dubbo:registry
 		protocol="zookeeper"
-		address="192.168.25.128:2181" />
+		address="192.168.25.128:2181" file = "orderweb.properties"/>
 	<dubbo:reference
 		interface="com.pekka.sso.service.UserService"
 		id="userService" />
 	<dubbo:reference
 		interface="com.pekka.order.service.OrderService"
-		id="orderService" timeout="1500000"/>
+		id="orderService" timeout="300000"/>
 
 
 </beans>
