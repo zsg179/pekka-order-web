@@ -26,7 +26,7 @@
 <jsp:include page="commons/shortcut.jsp" />
 <!--shortcut end-->
 <div class="w" id="headers">
-		<div id="logo"><a href="/"><img alt="皮卡商城" src="/images/pekka-logo.jpg" width="150" height="62" alt="皮卡" title="返回皮卡商城首页" alt="返回皮卡商城首页"></a></div>
+		<div id="logo"><a href="http://localhost:8082"><img alt="皮卡商城" src="/images/pekka-logo.jpg" width="150" height="62" alt="皮卡" title="返回皮卡商城首页" alt="返回皮卡商城首页"></a></div>
 		<ul class="step" id="step3">
 			<li class="fore1">1.我的购物车<b></b></li>
 			<li class="fore2">2.填写核对订单信息<b></b></li>
