@@ -51,6 +51,8 @@
 
 	<form id="orderForm" class="hide">
 		<input type="hidden" name="paymentType" value="1" />
+		<input type="hidden" name="userId" value="${userId }">
+		<input type="hidden" name="userName" value="${userName }">
 		<c:forEach items="${cartList }" var="cart" varStatus="status">
 			<c:set var="totalPrice"
 				value="${ totalPrice + (cart.price * cart.num)}" />

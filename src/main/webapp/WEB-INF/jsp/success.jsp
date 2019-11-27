@@ -42,19 +42,25 @@
 		<div class="mc" id="success_detail">	
 		    <ul class="list-order">
 			    <li class="li-st">
-					<div class="fore1">订单号：<a href="javascript:void(0)">${orderId }</a></div>
+			    
+					<div class="fore1">提交订单成功，请尽快付款！订单号：</div>${orderId }
+					<form id="payForm" action="/goAlipay.action" method="post">
+					<input type="hidden" name="orderId" value="${orderId }" />
+					<input type="submit" value="立即付款">
+					</form>
+					<!-- <div><a href="javascript:void(0)" onclick="pay()">立即付款</a></div> -->
 					<!-- 货到付款 -->
-					<div class="fore2">货到付款：<strong class="ftx-01">${payment}元</strong></div>
+					<%-- <div class="fore2">货到付款：<strong class="ftx-01">${payment}元</strong></div>
 					<div class="fore3">
 					   	皮卡快递 &nbsp; 送货时间: 预计 ${date} 送达&nbsp;
-					</div>
+					</div> --%>
 				</li>
 			</ul>
 		<!-- 在线支付按钮  -->
 				<div id="bookDiv"></div>
- 					<p class="i-tips01">
+ 					<!-- <p class="i-tips01">
 				            	您的订单已经在处理中，发货后订单内容会显示承运人联系方式，如有必要您可以联系对方
-             		</p>
+             		</p> -->
 		 </div>
 	</div>
 </div>
@@ -63,5 +69,17 @@
     <jsp:include page="commons/footer-links.jsp"></jsp:include>
     <!-- links end -->
 </div><!-- footer end -->
+
+<!-- <script type="text/javascript">
+var orderId = ${orderId };
+	function pay(){
+		$.ajax({
+			url:"/goAlipay.action",
+			type: "POST",
+	    	data: {"orderId":orderId},
+	    	dataType: "json"
+		})
+	}
+</script> -->
      </body> 
 </html>
