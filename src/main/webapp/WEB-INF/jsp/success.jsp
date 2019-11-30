@@ -37,18 +37,19 @@
 <div class="w" id="safeinfo"></div><!--父订单的ID-->
 <div class="w main">
 	<div class="m m3 msop">
-        <div class="mt" id="success_tittle"><s class="icon-succ02"></s><h3 class="ftx-02">感谢您，订单提交成功！</h3>
+        <div class="mt" id="success_tittle"><s class="icon-succ02"></s><h3 class="ftx-02">订单提交成功！</h3>
 		</div>
 		<div class="mc" id="success_detail">	
 		    <ul class="list-order">
 			    <li class="li-st">
 			    
-					<div class="fore1">提交订单成功，请尽快付款！订单号：</div>${orderId }
+					<div class="fore1">提交订单成功，请尽快付款！订单号：${orderId }</div>
 					<form id="payForm" action="/goAlipay.action" method="post">
 					<input type="hidden" name="orderId" value="${orderId }" />
-					<input type="submit" value="立即付款">
+					<!-- <input type="submit" value="立即付款"> -->
+					<br />
+					<div><a href="javascript:void(0)" onclick="payForm.submit()">立即付款</a></div>
 					</form>
-					<!-- <div><a href="javascript:void(0)" onclick="pay()">立即付款</a></div> -->
 					<!-- 货到付款 -->
 					<%-- <div class="fore2">货到付款：<strong class="ftx-01">${payment}元</strong></div>
 					<div class="fore3">
