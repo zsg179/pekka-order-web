@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -125,6 +127,7 @@ public class OrderCartController {
 		// 存入session
 		request.getSession().setAttribute("orderId", orderInfo.getOrderId());
 		request.getSession().setAttribute("payment", orderInfo.getPayment());
+		request.getSession().setAttribute("userId", orderInfo.getUserId());
 		// model.addAttribute("orderId", result.getData().toString());
 		// model.addAttribute("payment", orderInfo.getPayment());
 		// 预计送达时间，三天后送达
@@ -363,5 +366,42 @@ public class OrderCartController {
 	@RequestMapping("/order/success")
 	public String toSuccess() {
 		return "success";
+	}
+
+	@RequestMapping("/order/allOrders/{userId}")
+	public String showOrders(Model model, @PathVariable Long userId, HttpServletRequest request) {
+		List<OrderInfo> allOrders = orderService.getAllOrders(userId);
+		model.addAttribute("allOrders", allOrders);
+		// model.addAttribute("userId", userId);
+		request.getSession().setAttribute("userId", userId);
+		return "orders";
+	}
+
+	@RequestMapping("/order/deleteOrder")
+	@ResponseBody
+	public PekkaResult deleteOrder(String orderId) {
+		return orderService.deleteOrder(orderId);
+	}
+
+	@RequestMapping("/order/showOrdersByStatus/{userId}/{status}")
+	public String showOrdersByStatus(Model model, @PathVariable Long userId, @PathVariable int status) {
+		List<OrderInfo> ordertoPay = orderService.getOrderByStatus(userId, status);
+		model.addAttribute("allOrders", ordertoPay);
+		// model.addAttribute("userId", userId);
+		return "orders";
+	}
+
+	@RequestMapping("/order/harvest")
+	@ResponseBody
+	public PekkaResult harvest(String orderId) {
+		return orderService.harvest(orderId);
+	}
+
+	@RequestMapping("/order/searchOrder")
+	public String searchOrder(String key, long userId, Model model) {
+		List<OrderInfo> searchOrder = orderService.searchOrder(key);
+		model.addAttribute("allOrders", searchOrder);
+		model.addAttribute("userId", userId);
+		return "orders";
 	}
 }

@@ -77,8 +77,8 @@
 <script type="text/javascript" src="/js/lib-v1.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/taotao.js" charset="utf-8"></script>
 <script type="text/javascript"> (function(){
-var A="<strong>热门搜索：</strong><a href='http://sale.jd.com/act/OfHQzJ2GLoYlmTIu.html' target='_blank' style='color:#ff0000' clstag='homepage|keycount|home2013|03b1'>校园之星</a><a href='http://sale.jd.com/act/aEBHqLFMfVzDZUvu.html' target='_blank'>办公打印</a><a href='http://www.jd.com/pinpai/878-12516.html' target='_blank'>美菱冰箱</a><a href='http://sale.jd.com/act/nuzKb6ZiYL.html' target='_blank'>无肉不欢</a><a href='http://sale.jd.com/act/ESvhtcAJNbaj.html' target='_blank'>万件好货</a><a href='http://sale.jd.com/act/nAqiWgU34frQolt.html' target='_blank'>iPhone6</a><a href='http://sale.jd.com/act/p0CmUlEFPHLX.html' target='_blank'>哈利波特</a><a href='http://sale.jd.com/act/FstSdb2vCOLa8BRi.html' target='_blank'>美模接驾</a>";
-var B=["java","apple","LG G3","天梭","保温杯","三个爸爸"];
+var A="<a href='http://localhost:8085/search.html?q=早教机' target='_blank' style='color:#ff0000' clstag='homepage|keycount|home2013|03b1'>早教机</a><a href='http://localhost:8085/search.html?q=点读笔' target='_blank'>点读笔</a><a href='http://localhost:8085/search.html?q=娃娃' target='_blank'>娃娃</a><a href='http://localhost:8085/search.html?q=乐高' target='_blank'>乐高</a><a href='http://localhost:8085/search.html?q=电子琴' target='_blank'>电子琴</a><a href='http://localhost:8085/search.html?q=钢琴' target='_blank'>钢琴</a><a href='http://localhost:8085/search.html?q=儿童泳池' target='_blank'>儿童泳池</a><a href='http://localhost:8085/search.html?q=拼图' target='_blank'>拼图</a>";
+var B=["魔方","遥控车","早教机","毛绒玩具","乐器","乐高"];
 B=pageConfig.FN_GetRandomData(B);
 $("#hotwords").html(A);
 var _searchValue = "${query}";

@@ -56,7 +56,7 @@
 				            	您的订单已经在处理中，发货后订单内容会显示承运人联系方式，如有必要您可以联系对方
              		</p> -->
 		 </div>
-		 <a href="#">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://localhost:8082">回首页</a>
+		 <a href="http://localhost:8091/order/allOrders/${userId }.action">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://localhost:8082">回首页</a>
 	</div>
 </div>
   <div class="w">
