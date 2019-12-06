@@ -387,6 +387,7 @@ public class OrderCartController {
 	public String showOrdersByStatus(Model model, @PathVariable Long userId, @PathVariable int status) {
 		List<OrderInfo> ordertoPay = orderService.getOrderByStatus(userId, status);
 		model.addAttribute("allOrders", ordertoPay);
+		model.addAttribute("status", status);
 		// model.addAttribute("userId", userId);
 		return "orders";
 	}

@@ -65,16 +65,17 @@
 	</div>
 	<div id="ui-mask-harvest" class="ui-mask"></div>
 	<!-- 确认收货时弹出提示框  end-->
-	
+	<!-- 隐藏的数据，用于区分不同的状态 -->
+	<input type="hidden" id="status" value="${status }"/>
 	<div id="main">
 		<div id="order02" class="mod-main mod-comm lefta-box">
 			<div class="mt">
 				<ul class="extra-l">
-					<li ><a id="allOrders" class="txt curr"
+					<li ><a id="allOrders" class="txt "
 						href="http://localhost:8091/order/allOrders/${userId }.action" >全部订单</a></li>
-					<li><a id="ordertoPay" class="txt" href="http://localhost:8091/order/showOrdersByStatus/${userId }/1.action">待付款</a></li>
-					<li><a id="ordertoSend" class="txt"  href="http://localhost:8091/order/showOrdersByStatus/${userId }/2.action" >待发货</a></li>
-					<li><a id="ordertoReceive" class="txt"  href="http://localhost:8091/order/showOrdersByStatus/${userId }/4.action" >待收货</a></li>
+					<li><a id="orderStatus1" class="txt" href="http://localhost:8091/order/showOrdersByStatus/${userId }/1.action">待付款</a></li>
+					<li><a id="orderStatus2" class="txt"  href="http://localhost:8091/order/showOrdersByStatus/${userId }/2.action" >待发货</a></li>
+					<li><a id="orderStatus4" class="txt"  href="http://localhost:8091/order/showOrdersByStatus/${userId }/4.action" >待收货</a></li>
 				</ul>
 				<div class="extra-r">
 					<div class="search">
@@ -304,12 +305,36 @@
 	
 	 $(function(){
 		 /* 切换导航栏状态 */
-			$('li a').click(function(){
+		 var status = $("#status").val();
+		 if(status == 1){
+			 $("#allOrders").removeClass("curr");
+			 $("#orderStatus1").addClass("curr");
+			 $("#orderStatus2").removeClass("curr");
+			 $("#orderStatus4").removeClass("curr");
+		 }else if(status == 2){
+			 $("#allOrders").removeClass("curr");
+			 $("#orderStatus1").removeClass("curr");
+			 $("#orderStatus2").addClass("curr");
+			 $("#orderStatus4").removeClass("curr");
+		 }else if(status == 4){
+			 $("#allOrders").removeClass("curr");
+			 $("#orderStatus1").removeClass("curr");
+			 $("#orderStatus2").removeClass("curr");
+			 $("#orderStatus4").addClass("curr");
+		 }else{
+			 $("#allOrders").addClass("curr");
+			 $("#orderStatus1").removeClass("curr");
+			 $("#orderStatus2").removeClass("curr");
+			 $("#orderStatus4").removeClass("curr");
+		 }
+		 
+		 
+			/* $('li a').click(function(){
 				var f = this;
 				$('li a').each(function(){
 					this.className = this == f ? 'txt curr' :'txt';
 				})
-			})
+			}) */
 	})  
 	
 	/* 删除订单 */
