@@ -43,7 +43,7 @@
 		    <ul class="list-order">
 			    <li class="li-st">
 					<%-- <div class="fore1">提交订单成功，请尽快付款！订单号：</div>${orderId } --%>
-					<div class="fore2">在线支付：<strong class="ftx-01">${payment}元</strong></div>
+					<div class="fore2">在线支付：<strong class="ftx-01">${total_amount}元</strong></div>
 					<div class="fore3">
 					   	等待卖家发货
 					</div>
