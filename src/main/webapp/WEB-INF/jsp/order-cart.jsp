@@ -97,9 +97,9 @@
 						<!--  /widget/consignee-step/consignee-step.tpl -->
 						<div class="step-tit">
 							<h3>收货人信息</h3>
-							<div class="extra-r">
+							<!-- <div class="extra-r">
 								<a href="#none" class="ftx-05" onclick="use_NewConsignee()">新增收货地址</a>
-							</div>
+							</div> -->
 						</div>
 						<div class="step-cont">
 							<div class="consignee-list" id="consignee-list1">
@@ -420,11 +420,12 @@
 													</h4>
 													<div class="mode-tab-nav">
 														<ul>
-															<li class="mode-tab-item " id="jd_shipment_item"
-																onclick="doSwithTab('pay')"><span
+															<li class="mode-tab-item item-selected"
+																id="jd_shipment_item" onclick="doSwithTab('pay')"><span
 																id="jdShip-span-tip" class="m-txt">皮卡快递<i
 																	class='qmark-icon qmark-tip'
-																	data-tips='由皮卡公司负责配送，速度很快，还接受上门刷卡付款服务'></i></span><b></b></li>
+																	data-tips='由皮卡公司负责配送，速度很快，还接受上门刷卡付款服务'></i></span><b
+																style="display: block; position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; overflow: hidden; background: url(../images/user_purchase.png) no-repeat; background-position-x: 0%; background-position-y: 0%; background-position: 0 -23px;"></b></li>
 														</ul>
 													</div>
 												</div>

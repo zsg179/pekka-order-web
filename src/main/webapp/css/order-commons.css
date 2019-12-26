@@ -2179,7 +2179,8 @@ div.ui-dialog-content {
 	padding: 5px 0;
 	width: 150px;
 	text-align: center;
-	border: 1px solid #ddd;
+	/* border: 1px solid #ddd; */
+	border: 2px solid #e4393c;
 	margin-right: 10px;
 	position: relative;
 	cursor: pointer
