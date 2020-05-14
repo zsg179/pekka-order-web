@@ -128,14 +128,6 @@ public class OrderCartController {
 		request.getSession().setAttribute("orderId", orderInfo.getOrderId());
 		request.getSession().setAttribute("payment", orderInfo.getPayment());
 		request.getSession().setAttribute("userId", orderInfo.getUserId());
-		// model.addAttribute("orderId", result.getData().toString());
-		// model.addAttribute("payment", orderInfo.getPayment());
-		// 预计送达时间，三天后送达
-		// DateTime dateTime = new DateTime();
-		// dateTime = dateTime.plusDays(3);
-		// request.getSession().setAttribute("date",
-		// dateTime.toString("yyyy-MM-dd"));
-		// model.addAttribute("date", dateTime.toString("yyyy-MM-dd"));
 		return result;
 	}
 
